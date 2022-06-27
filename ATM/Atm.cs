@@ -21,7 +21,7 @@ namespace ATM
             banknotes.Add(5000, 500);
         }
 
-        public string IncreaseAccount(BankUser user,int sum) //положить деньги на карточку
+        public string IncreaseAccount(BankUser user,int sum) //положить деньги на карточку, покупюрно
         {
             if (user.UserBanknotes >= sum && banknotes.ContainsKey(sum))
             {
@@ -44,18 +44,23 @@ namespace ATM
             switch(result)
             {
                 case "0":
-                    if (user.UserBanknotes >= sum && banknotes.ContainsKey(sum))
+                    List<int> temp = new List<int>();
+                    Console.WriteLine("Постепенно вводите деньги, пока не наберёте 1000 рублей. Нажмите 6, когда закончите.");
+                    FillTemp(temp,banknotes);
+                    int d=SumList(temp);
+                    if (user.UserBanknotes >= sum && sum==d)
                     {
-                        user.UserBanknotes -= sum;
-                        banknotes[sum]++;
-                        if (!banknotes.ContainsKey(sum))
+                        for (int i = 0; i < temp.Count; i++)
                         {
-                            return ("Попробуйте снова. Такой купюры нет.");
+                            int tp = temp[i];
+                            banknotes[tp]++;
                         }
+                        user.UserBanknotes -= sum;
                         return String.Format("Вы успешно оплатили госпошлину в {0} рублей", sum);
                     }
-                    return String.Format("Вы успешно оплатили госпошлину в {0} рублей", sum);
-               case "1":
+                    if(sum>d) return String.Format("Введённая вами сумма не соответствует указанной. Попробуйте снова.");
+                    else return ("У вас недостаточно средств для данной операции. Перевод не пороизошёл");
+                case "1":
                     if (UserAccount >= sum)  //
                     {  
                         UserAccount -= sum;  //
@@ -73,19 +78,24 @@ namespace ATM
             switch (result)
             {
                 case "0":
-                    if(transmitter.UserBanknotes >= transmissionSum && banknotes.ContainsKey(transmissionSum))
+                    List<int> temp = new List<int>();
+                    Console.WriteLine("Постепенно вводите деньги, пока не наберёте {0} рублей. Нажмите 6, когда закончите.",transmissionSum);
+                    FillTemp(temp, banknotes);
+                    int d = SumList(temp);
+                    if (transmitter.UserBanknotes >= transmissionSum && transmissionSum==d)
                     {
-                        transmitter.UserBanknotes -= transmissionSum;
-                        banknotes[transmissionSum]++;
-                        if (!banknotes.ContainsKey(transmissionSum))
+                        for (int i = 0; i < temp.Count; i++)
                         {
-                            return ("Попробуйте снова. Такой купюры нет.");
+                            int tp = temp[i];
+                            banknotes[tp]++;
                         }
+                        transmitter.UserBanknotes -= transmissionSum;
+                        GetterAccount += transmissionSum;
                         return String.Format("Вы успешно перевели пользователю {0}  {1} рублей",getter.UserName, transmissionSum);
-
                     }
-                    return String.Format("У вас недостаточно средств для данной операции. Перевод не пороизошёл");
-                    case "1":
+                    if(transmissionSum>d) return String.Format("У вас недостаточно средств для данной операции. Перевод не пороизошёл");
+                    return ("У вас недостаточно средств для данной операции. Перевод не пороизошёл");
+                case "1":
                         if (UserAccount >= transmissionSum) //
                         {
                             UserAccount -= transmissionSum; //
@@ -143,6 +153,11 @@ namespace ATM
                 {
                     temp.Add(c);
                     c=Convert.ToInt32(Console.ReadLine());
+                }
+                else
+                {
+                    Console.WriteLine("Попробуйте снова. Такой купюры нет.");
+                    break;
                 }
             }
         }

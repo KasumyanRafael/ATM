@@ -17,10 +17,11 @@ namespace ATM
             BankUser bankUser = new BankUser(name, sum);
             Atm valera = new Atm(name,sum);
             Console.WriteLine("Здравствуйте, {0}. Вас приветствует наш банкомат." +
-                "Если хотите пополнить свой счёт, жмите 1." +
+                "Если хотите покупюрно пополнять свой счёт, жмите 1." +
                 "Для оплаты госпошлины жмите 2." +
                 "Для осуществления денежного перевода жмите 3." +
                 "Для обналичивания суммы жмите 4." +
+                "Для мониторинга аккаунта жмите 5" +
                 "Для выхода жмите 0.",bankUser.UserName);
             string n=Console.ReadLine();
             while(n!="0")
@@ -28,7 +29,7 @@ namespace ATM
                 switch(n)
                 {
                     case "1":
-                        Console.WriteLine("Сколько денег желаете положить на карточку?");
+                        Console.WriteLine("Введите купюру.");
                         int sm=Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine(valera.IncreaseAccount(bankUser,sm));
                         break;

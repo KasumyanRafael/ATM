@@ -17,7 +17,7 @@ namespace ATM
             BankUser bankUser = new BankUser(name, sum);
             Atm valera = new Atm(name,sum);
             Console.WriteLine("Здравствуйте, {0}. Вас приветствует наш банкомат." +
-                "Если хотите пополнить свой счёт (покупюрно), жмите 1." +
+                "Если хотите пополнить свой счёт, жмите 1." +
                 "Для оплаты госпошлины жмите 2." +
                 "Для осуществления денежного перевода жмите 3." +
                 "Для обналичивания суммы жмите 4." +
@@ -28,7 +28,7 @@ namespace ATM
                 switch(n)
                 {
                     case "1":
-                        Console.WriteLine("Какую купюру желаете положить на карточку?");
+                        Console.WriteLine("Сколько денег желаете положить на карточку?");
                         int sm=Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine(valera.IncreaseAccount(bankUser,sm));
                         break;

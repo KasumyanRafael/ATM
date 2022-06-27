@@ -21,7 +21,7 @@ namespace ATM
             banknotes.Add(5000, 500);
         }
 
-        public string IncreaseAccount(BankUser user,int sum) //положить деньги на карточку, покупюрно
+        public string IncreaseAccount(BankUser user,int sum) //положить деньги на карточку
         {
             if (user.UserBanknotes >= sum && banknotes.ContainsKey(sum))
             {
@@ -30,7 +30,7 @@ namespace ATM
                 banknotes[sum]++;
                 return String.Format("Вы положили на карточку {0} рублей", sum);
             }
-            if(!banknotes.ContainsKey(sum))
+            if (!banknotes.ContainsKey(sum))
             {
                 return ("Попробуйте снова. Такой купюры нет.");
             }
